@@ -1,7 +1,11 @@
 import classNames from 'classnames/bind'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCircleXmark,faSpinner,faMagnifyingGlass,faPlus,faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard} from '@fortawesome/free-solid-svg-icons'
-import Tippy from '@tippyjs/react/headless';
+import {faCircleXmark,faSpinner,faMagnifyingGlass,faPlus,faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudUpload, faMessage, faUser, faCoins, faGear, faSignOut} from '@fortawesome/free-solid-svg-icons'
+import Tippy from '@tippyjs/react';
+import HeadlessTippy from '@tippyjs/react/headless';
+import 'tippy.js/dist/tippy.css'; // optional
+
+
 import Button from '../../../Button/Button';
 import { Wrapper as PopperWrapper} from '../../../Poper';
 import styles from './Header.module.scss';
@@ -46,20 +50,47 @@ const MENU_ITEMS = [
         title: 'Keyboard Shortcuts',
     }
 ]
-function Header() {
 
+
+const userMenu = [
+    {
+        icon: <FontAwesomeIcon icon = {faUser} />,
+        title: 'View profile',
+        to: '/@hoang'
+    },
+    {
+        icon: <FontAwesomeIcon icon = {faCoins} />,
+        title: 'Get coins',
+        to: '/coin'
+    },
+    {
+        icon: <FontAwesomeIcon icon = {faGear} />,
+        title: 'Settings',
+        to: '/setting'
+    },
+    ...MENU_ITEMS,
+    {
+        icon: <FontAwesomeIcon icon = {faSignOut} />,
+        title: 'Log out',
+        to: '/logout',
+        separate: true
+    },
+
+]
+function Header() {
+    
     //Handle logic
     const handleMenuChange = (menuItem) => {
         console.log(menuItem)
     }
+    const currentUser = true
 
-    
     return <header className={cx('wrapper')}>
         <div className={cx('inner')}>
             <img src={images.logo} alt = "TikTok"></img>
-            <Tippy
+            <HeadlessTippy
                 interactive
-                visible
+                //visible
                 render = {attrs => (
                     <div className={cx('search-result')} tabIndex = "-1" {...attrs}>
                         <PopperWrapper>
@@ -79,14 +110,43 @@ function Header() {
                         <FontAwesomeIcon icon={faMagnifyingGlass}/>
                     </button>
                 </div>
-            </Tippy>
+            </HeadlessTippy>
+
             <div className={cx('actions')}>
-                <Button leftIcon = {<FontAwesomeIcon icon={faPlus}/>}>Upload</Button>
-                <Button primary>Login</Button>
-                <Menu items = {MENU_ITEMS} onChange = {handleMenuChange}>
-                    <button className={cx('menu-btn')}>
-                        <FontAwesomeIcon icon={faEllipsisVertical} />
-                    </button>
+                {
+                    currentUser ? (
+                        <>
+                            <Tippy content = 'Upload video' placement='bottom' delay={[0, 200]}>
+                                <button className={cx('action-btn')}>
+                                    <FontAwesomeIcon icon= {faCloudUpload} />
+                                </button>
+                            </Tippy>
+                                <button className={cx('action-btn')}>
+                                    <FontAwesomeIcon icon= {faMessage} />
+                                </button>
+                        </>
+                    ) : (
+
+                        <>
+                            <Button leftIcon = {<FontAwesomeIcon icon={faPlus}/>}>Upload</Button>
+                            <Button primary>Login</Button>
+                        </>
+                    )
+                }
+                <Menu  items = {currentUser ? userMenu : MENU_ITEMS} onChange = {handleMenuChange}>
+                    {
+                        currentUser ? (
+                            <img    
+                                    className={cx('user-avatar')} 
+                                    src = 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/240452070_1025396538195938_4596701653283501203_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=6qMWWziMdikAX92INGD&_nc_ht=scontent.fsgn5-9.fna&oh=00_AT_Zf6WdZZdLBI6YIbEx48pcEUfJW_ujpV6TeYFL9XS-bg&oe=6298A9A2' 
+                                    alt='Tống Đức Hoàng'
+                            />
+                        ) : (
+                            <button className={cx('menu-btn')}>
+                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                            </button>
+                        )
+                    }
                 </Menu>
             </div>
         </div>
