@@ -12,6 +12,8 @@ import styles from './Header.module.scss';
 import images from '../../../../assets/images';
 import AccountItem from '../../../AccountItem';
 import Menu from '../../../Poper/Menu/index.js';
+import { Inbox, Message } from '../../../Icons';
+import Image from '../../../Image';
 
 const cx = classNames.bind(styles)
 
@@ -91,6 +93,7 @@ function Header() {
             <HeadlessTippy
                 interactive
                 //visible
+                //offset={[60,8]}
                 render = {attrs => (
                     <div className={cx('search-result')} tabIndex = "-1" {...attrs}>
                         <PopperWrapper>
@@ -116,19 +119,22 @@ function Header() {
                 {
                     currentUser ? (
                         <>
-                            <Tippy content = 'Upload video' placement='bottom' delay={[0, 200]}>
-                                <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon= {faCloudUpload} />
+                            <Button className = {cx('button-style')} leftIcon = {<FontAwesomeIcon icon={faPlus}/>}>Upload</Button>
+                            <Tippy content = 'Message' placement='bottom' delay={[0, 200]}>
+                                <button className={cx('action-btn','action-btn-space')}>
+                                    <Message className={cx('icon-message')}/>
                                 </button>
                             </Tippy>
+                            <Tippy content = 'Inbox' placement='bottom' delay={[0, 200]}>
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon= {faMessage} />
+                                    <Inbox />
                                 </button>
+                            </Tippy>
                         </>
                     ) : (
 
                         <>
-                            <Button leftIcon = {<FontAwesomeIcon icon={faPlus}/>}>Upload</Button>
+                            <Button className = {cx('button-style')} leftIcon = {<FontAwesomeIcon icon={faPlus}/>}>Upload</Button>
                             <Button primary>Login</Button>
                         </>
                     )
@@ -136,7 +142,7 @@ function Header() {
                 <Menu  items = {currentUser ? userMenu : MENU_ITEMS} onChange = {handleMenuChange}>
                     {
                         currentUser ? (
-                            <img    
+                            <Image    
                                     className={cx('user-avatar')} 
                                     src = 'https://scontent.fsgn5-9.fna.fbcdn.net/v/t39.30808-6/240452070_1025396538195938_4596701653283501203_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=6qMWWziMdikAX92INGD&_nc_ht=scontent.fsgn5-9.fna&oh=00_AT_Zf6WdZZdLBI6YIbEx48pcEUfJW_ujpV6TeYFL9XS-bg&oe=6298A9A2' 
                                     alt='Tống Đức Hoàng'

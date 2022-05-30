@@ -5,7 +5,7 @@
     font-size: 1.6rem;
     font-weight: 600;
     min-width: 100px;
-    padding: 8px 16px;
+    padding: 6px 16px;
     border-radius: 4px;
     cursor: pointer;
     border: 1px solid transparent;
@@ -15,6 +15,13 @@
     justify-content: center;
     + .wrapper{
         margin-left: 16px;
+    }
+}
+
+.button-style{
+    border-color: rgba(22, 24, 35, 0.12);
+    &:hover{
+        background-color: rgba(22, 24, 35, 0.03);
     }
 }
 

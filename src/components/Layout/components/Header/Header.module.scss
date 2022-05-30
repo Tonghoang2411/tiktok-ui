@@ -6,6 +6,7 @@
     justify-content: center;
 
 }
+
 .inner{
     height: 100%;
     width: var(--default-layout-width);
@@ -94,7 +95,6 @@
 
 .search-result{
     width: 361px;
-    transform: translateX(50px);
 }
 
 .actions{
@@ -109,8 +109,13 @@
     color: #161823;
     padding: 4px 12px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
+.action-btn-space{
+    margin-left: 10px;
+}
 .user-avatar{
     width: 32px;
     height: 32px;
@@ -128,3 +133,4 @@
     padding: 4px 8px;
     cursor: pointer;
 }
+
