@@ -6,9 +6,10 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css'; // optional
 
 
+import styles from './Header.module.scss';
+import Search from '../Search';
 import Button from '../../../Button/Button';
 import { Wrapper as PopperWrapper} from '../../../Poper';
-import styles from './Header.module.scss';
 import images from '../../../../assets/images';
 import AccountItem from '../../../AccountItem';
 import Menu from '../../../Poper/Menu/index.js';
@@ -90,31 +91,7 @@ function Header() {
     return <header className={cx('wrapper')}>
         <div className={cx('inner')}>
             <img src={images.logo} alt = "TikTok"></img>
-            <HeadlessTippy
-                interactive
-                //visible
-                //offset={[60,8]}
-                render = {attrs => (
-                    <div className={cx('search-result')} tabIndex = "-1" {...attrs}>
-                        <PopperWrapper>
-                            <h4 className={cx('search-title')}>Accounts</h4>
-                            <AccountItem />
-                            <AccountItem />
-                            <AccountItem />
-                        </PopperWrapper>
-                    </div>
-                )}
-            >
-                <div className={cx('search')}>
-                    <input placeholder="Search acounts and videos" spellCheck = {false}/>
-                    <FontAwesomeIcon icon={faCircleXmark} className={cx('clear')}/>
-                    <FontAwesomeIcon  className={cx('loading')}icon={faSpinner}/>
-                    <button className={cx('search-btn')}>
-                        <FontAwesomeIcon icon={faMagnifyingGlass}/>
-                    </button>
-                </div>
-            </HeadlessTippy>
-
+            <Search />
             <div className={cx('actions')}>
                 {
                     currentUser ? (
