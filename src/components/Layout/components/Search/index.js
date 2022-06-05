@@ -4,9 +4,12 @@ import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import 'tippy.js/dist/tippy.css'; // optional
+
+import styles from './Search.module.scss';
 import AccountItem from '../../../AccountItem';
 import { Wrapper as PopperWrapper } from '../../../Poper';
-import styles from './Search.module.scss';
+import useDebounce from '../../../../hooks/useDebounce';
+import * as searchService from '../../../../apiServices/searchService';
 
 
 
@@ -20,22 +23,24 @@ function Search() {
     const [showResult,setShowResult] = useState(true)
     const [loading,setLoading] = useState(false)
 
+    const debounced = useDebounce(searchValue,500)
+
     useEffect(() => {
-        if(!searchValue.trim()){
+        if(!debounced.trim()){
             setSearchResult([])
             return;
         }
-        setLoading(true)
+        
+        const fetchApi = async () => {
+            setLoading(true)
+            const result = await searchService.search(debounced)
+            setSearchResult(result)
+            setLoading(false)
+        }
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
-            .then(res => res.json())
-            .then(res => {
-                setSearchResult(res.data)
-                setLoading(false)
-            })
+        fetchApi()
 
-            .catch(() => setLoading(false))
-    },[searchValue])
+    },[debounced])
     
     const handleClear = () => {
         setSearchValue('')
@@ -86,7 +91,7 @@ function Search() {
                 )}
                 
                 {loading && <FontAwesomeIcon  className={cx('loading')}icon={faCircleNotch}/>}
-                <button className={cx('search-btn')}>
+                <button className={cx('search-btn')} onMouseDown = {e => e.preventDefault()}>
                     <FontAwesomeIcon icon={faMagnifyingGlass}/>
                 </button>
             </div>

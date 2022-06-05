@@ -8,7 +8,7 @@ import Header from './Header';
 
 const cx = classNames.bind(styles)
 
-function Menu({children,items = [], onChange}) {
+function Menu({children,items = [],hideOnClick = false, onChange}) {
     const [history,setHistory] = useState([{data:items}])
     const current = history[history.length - 1]
 
@@ -31,6 +31,7 @@ function Menu({children,items = [], onChange}) {
             delay={[0,700]}
             offset={[12,8]}
             onHide = {() => setHistory(history.slice(0,1))}
+            hideOnClick = {hideOnClick}
             placement = "bottom-end"
             render = {attrs => (
                 <div className={cx('menu-list')} tabIndex = "-1" {...attrs}>

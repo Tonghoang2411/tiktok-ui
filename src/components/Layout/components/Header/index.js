@@ -1,20 +1,21 @@
-import classNames from 'classnames/bind'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCircleXmark,faSpinner,faMagnifyingGlass,faPlus,faEllipsisVertical, faEarthAsia, faCircleQuestion, faKeyboard, faCloudUpload, faMessage, faUser, faCoins, faGear, faSignOut} from '@fortawesome/free-solid-svg-icons'
+import { faCircleQuestion, faCoins, faEarthAsia, faEllipsisVertical, faGear, faKeyboard, faPlus, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Tippy from '@tippyjs/react';
-import HeadlessTippy from '@tippyjs/react/headless';
+import classNames from 'classnames/bind';
 import 'tippy.js/dist/tippy.css'; // optional
+import { Link } from 'react-router-dom';
 
 
-import styles from './Header.module.scss';
 import Search from '../Search';
-import Button from '../../../Button/Button';
-import { Wrapper as PopperWrapper} from '../../../Poper';
+import styles from './Header.module.scss';
 import images from '../../../../assets/images';
-import AccountItem from '../../../AccountItem';
-import Menu from '../../../Poper/Menu/index.js';
+import Button from '../../../Button/Button';
 import { Inbox, Message } from '../../../Icons';
 import Image from '../../../Image';
+import Menu from '../../../Poper/Menu/index.js';
+import RoutesConfig from '../../../../config/routes.js'
+
+
 
 const cx = classNames.bind(styles)
 
@@ -90,7 +91,9 @@ function Header() {
 
     return <header className={cx('wrapper')}>
         <div className={cx('inner')}>
-            <img src={images.logo} alt = "TikTok"></img>
+            <Link to={RoutesConfig.home} className={cx('logo-link')}>
+                <img src={images.logo} alt = "TikTok"></img>
+            </Link>
             <Search />
             <div className={cx('actions')}>
                 {
