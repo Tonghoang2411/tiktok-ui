@@ -1,15 +1,15 @@
-import RoutesConfig from '../config/routes.js'
+import config from '../config/index.js'
 import Home from "../pages/Home";
 import Following from "../pages/Following";
 import Profile from "../pages/Profile";
 import Upload from "../pages/Upload";
-import HeaderOnly from "../components/Layout/HeaderOnly";
+import HeaderOnly from "../layouts/HeaderOnly";
 
 const publicRoutes= [
-    { path: RoutesConfig.home, component: Home},
-    { path: RoutesConfig.following, component: Following},
-    { path: RoutesConfig.profile, component: Profile},
-    { path: RoutesConfig.upload, component: Upload,layout:HeaderOnly}
+    { path: config.routes.home, component: Home},
+    { path: config.routes.following, component: Following},
+    { path: config.routes.profile, component: Profile},
+    { path: config.routes.upload, component: Upload,layout:HeaderOnly}
 ]
 
 const privateRoutes = []

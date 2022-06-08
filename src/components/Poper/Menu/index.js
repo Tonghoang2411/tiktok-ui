@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import classNames from 'classnames/bind'
 import styles from './Menu.module.scss'
@@ -36,10 +37,10 @@ function Menu({children,items = [],hideOnClick = false, onChange}) {
             render = {attrs => (
                 <div className={cx('menu-list')} tabIndex = "-1" {...attrs}>
                     <PopperWrapper>
-                        {history.length > 1 && <Header title='Language' onBack={() => {
+                        {history.length > 1 && <Header title={current.title} onBack={() => {
                             setHistory(history.slice(0,history.length - 1))
                         }}/>}
-                        {RenderItem()}
+                        <div className = {cx('menu-body')}>{RenderItem()}</div>
                     </PopperWrapper>
                 </div>
             )}
@@ -49,4 +50,10 @@ function Menu({children,items = [],hideOnClick = false, onChange}) {
      );
 }
 
+Menu.propTypes = {
+    children : PropTypes.node.isRequired,
+    items : PropTypes.array,
+    hideOnClick : PropTypes.func,
+    onChange : PropTypes.func,
+}
 export default Menu;

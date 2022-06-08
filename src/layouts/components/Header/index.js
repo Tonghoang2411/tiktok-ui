@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom';
 
 import Search from '../Search';
 import styles from './Header.module.scss';
-import images from '../../../../assets/images';
-import Button from '../../../Button/Button';
-import { Inbox, Message } from '../../../Icons';
-import Image from '../../../Image';
-import Menu from '../../../Poper/Menu/index.js';
-import RoutesConfig from '../../../../config/routes.js'
+import images from '../../../assets/images';
+import Button from '../../../components/Button/Button';
+import { Inbox, Message } from '../../../components/Icons';
+import Image from '../../../components/Image';
+import Menu from '../../../components/Poper/Menu/index.js';
+import RoutesConfig from '../../../config/routes.js'
 
 
 

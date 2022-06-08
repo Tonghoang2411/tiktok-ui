@@ -6,10 +6,10 @@ import { useEffect, useRef, useState } from 'react';
 import 'tippy.js/dist/tippy.css'; // optional
 
 import styles from './Search.module.scss';
-import AccountItem from '../../../AccountItem';
-import { Wrapper as PopperWrapper } from '../../../Poper';
-import useDebounce from '../../../../hooks/useDebounce';
-import * as searchService from '../../../../apiServices/searchService';
+import AccountItem from '../../../components/AccountItem';
+import { Wrapper as PopperWrapper } from '../../../components/Poper';
+import useDebounce from '../../../hooks/useDebounce';
+import * as searchService from '../../../services/searchService';
 
 
 
@@ -33,9 +33,14 @@ function Search() {
         
         const fetchApi = async () => {
             setLoading(true)
-            const result = await searchService.search(debounced)
-            setSearchResult(result)
-            setLoading(false)
+            try {
+                const result = await searchService.search(debounced)
+                setSearchResult(result)
+                setLoading(false)
+                
+            } catch (error) {
+                console.log(error)
+            }
         }
 
         fetchApi()
@@ -52,7 +57,8 @@ function Search() {
         setShowResult(false)
     }
     return ( 
-        <HeadlessTippy
+        <div>
+            <HeadlessTippy
             interactive
             visible = {showResult && searchResult.length > 0}
             //offset={[60,8]}
@@ -67,35 +73,36 @@ function Search() {
                 </div>
             )}
             onClickOutside = {handleClickOutside}
-        >
-            <div className={cx('search')}>
-                <input 
-                    ref={inputRef}
-                    value = {searchValue}
-                    placeholder="Search acounts and videos" 
-                    spellCheck = {false}
-                    onChange = {(e) => {
-                        if (e.target.value.startsWith(' ')) {
-                            return;
-                        } else {
-                            setSearchValue(e.target.value);
-                        }}}
-                    onFocus = {() => setShowResult(true)}
-                />
-                {!!searchValue && !loading && (
-                    <FontAwesomeIcon   
-                        className={cx('clear')}
-                        icon={faCircleXmark}
-                        onClick = {handleClear}
+            >
+                <div className={cx('search')}>
+                    <input 
+                        ref={inputRef}
+                        value = {searchValue}
+                        placeholder="Search acounts and videos" 
+                        spellCheck = {false}
+                        onChange = {(e) => {
+                            if (e.target.value.startsWith(' ')) {
+                                return;
+                            } else {
+                                setSearchValue(e.target.value);
+                            }}}
+                        onFocus = {() => setShowResult(true)}
                     />
-                )}
-                
-                {loading && <FontAwesomeIcon  className={cx('loading')}icon={faCircleNotch}/>}
-                <button className={cx('search-btn')} onMouseDown = {e => e.preventDefault()}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass}/>
-                </button>
-            </div>
-        </HeadlessTippy>
+                    {!!searchValue && !loading && (
+                        <FontAwesomeIcon   
+                            className={cx('clear')}
+                            icon={faCircleXmark}
+                            onClick = {handleClear}
+                        />
+                    )}
+                    
+                    {loading && <FontAwesomeIcon  className={cx('loading')}icon={faCircleNotch}/>}
+                    <button className={cx('search-btn')} onMouseDown = {e => e.preventDefault()}>
+                        <FontAwesomeIcon icon={faMagnifyingGlass}/>
+                    </button>
+                </div>
+            </HeadlessTippy>
+        </div>
      )
 }
 

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind'
@@ -12,6 +13,11 @@ function Header({title,onBack}) {
                 </button>
                 <h4 className={cx('header-title')}>{title}</h4>
             </div>
+}
+
+Header.propTypes = {
+    title: PropTypes.string.isRequired,
+    onBack: PropTypes.func.isRequired
 }
 
 export default Header;
